@@ -12,12 +12,12 @@ impl Swapper {
         return Swapper {shift: key[0], swap_table, reswap_table: mk_reswap_table(&swap_table)};
     }
 
-    pub fn swap(&self, input: u8, index: usize) -> u8 {
-        return self.swap_table[(input + index as u8 * self.shift) as usize];
+    pub fn swap(&self, input: u8, index: u8) -> u8 {
+        return self.swap_table[(input + index * self.shift) as usize];
     }
 
-    pub fn reswap(&self, input: u8, index: usize) -> u8 {
-        return self.reswap_table[input as usize] - index as u8 * self.shift;
+    pub fn reswap(&self, input: u8, index: u8) -> u8 {
+        return self.reswap_table[input as usize] - index * self.shift;
     }
 }
 
@@ -41,3 +41,4 @@ fn mk_reswap_table(swap_table: &[u8; 256]) -> [u8; 256] {
 
     return out;
 }
+

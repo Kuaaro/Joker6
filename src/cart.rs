@@ -1,5 +1,3 @@
-use std::fmt::LowerExp;
-
 use rand::{thread_rng, Rng};
 
 pub trait CartHandler {
@@ -7,6 +5,7 @@ pub trait CartHandler {
     fn close(&self) -> Vec<u8>;
 }
 
+#[derive(Debug)]
 struct Cart4BitsForward {
     entrance: u8,
     seats: [u8; 16],
@@ -14,7 +13,7 @@ struct Cart4BitsForward {
 }
 
 impl Cart4BitsForward {
-    fn new(input: u8) -> Self {
+    fn new() -> Self {
         let mut rand_gen = thread_rng();
         let mut seats = [0u8; 16];
         
@@ -22,9 +21,7 @@ impl Cart4BitsForward {
             seats[i] = rand_gen.gen::<u8>() % 16;
         }
 
-        let mut out = Cart4BitsForward{entrance: rand_gen.gen::<u8>() % 16, seats, exit: 0};
-
-        out.put(input);
+        let mut out = Cart4BitsForward{entrance: rand_gen.gen::<u8>() % 16, seats, exit: rand_gen.gen::<u8>() % 16};
 
         return out;
     }
@@ -56,6 +53,7 @@ impl Cart4BitsForward {
     }
 }
 
+#[derive(Debug)]
 pub struct Cart4BitsForwardHandler {
     upper_cart: Cart4BitsForward,
     lower_cart: Cart4BitsForward
@@ -72,7 +70,7 @@ impl CartHandler for Cart4BitsForwardHandler {
 }
 
 impl Cart4BitsForwardHandler {
-    pub fn new(input: u8) -> Self {
-        return Cart4BitsForwardHandler{upper_cart: Cart4BitsForward::new(input >> 4), lower_cart: Cart4BitsForward::new(input & 15)};
+    pub fn new() -> Self {
+        return Cart4BitsForwardHandler{upper_cart: Cart4BitsForward::new(), lower_cart: Cart4BitsForward::new()};
     }
 }
