@@ -1,5 +1,5 @@
 use crate::io::{Reader, Writer};
-use crate::cart::{Cart4BitsForwardHandler, CartHandler, self};
+use crate::cart::{Cart4BitsForwardHandler, CartHandler};
 use crate::swapper::Swapper;
 use sha3::{Shake256, digest::{Update, ExtendableOutput, XofReader}};
 
@@ -22,11 +22,11 @@ impl Joker6 {
     }
     
     pub fn update_key(&mut self, pwd: &String) {
-        let mut hash: &[u8] = &pwd.as_bytes();
+        let mut hash: [u8; 256] = mk_hash(&pwd.as_bytes());
 
-        for i in 0..16 {
-            hash = &mk_hash(hash);
-            self.swappers[i] = Swapper::new(mk_key(hash));
+        for i in 0..15 {
+            self.swappers[i] = Swapper::new(mk_key(&hash));
+            hash = mk_hash(&hash);
         }
     }
 }
@@ -61,11 +61,11 @@ impl Joker for Joker6 {
 
         let mut close_bytes: Vec<u8>;
 
-        for cart_no in 0..16 { //closing carts
+        for cart_no in 0..16 {
             close_bytes = carts[cart_no].close();
-            for byte_no in 0..19 { //byte index
+            for byte_no in 0..19 {
                 close_bytes[byte_no] = self.swappers[cart_no].reswap(close_bytes[byte_no], index);
-                for swapper_no in cart_no+1..16 { //looping through remaining carts
+                for swapper_no in cart_no+1..16 {
                     
                     close_bytes[byte_no] = self.swappers[swapper_no].swap(close_bytes[byte_no], index);
                     close_bytes[byte_no] = carts[swapper_no].put(close_bytes[byte_no]);

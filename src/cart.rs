@@ -21,9 +21,7 @@ impl Cart4BitsForward {
             seats[i] = rand_gen.gen::<u8>() % 16;
         }
 
-        let mut out = Cart4BitsForward{entrance: rand_gen.gen::<u8>() % 16, seats, exit: rand_gen.gen::<u8>() % 16};
-
-        return out;
+        return Cart4BitsForward{entrance: rand_gen.gen::<u8>() % 16, seats, exit: rand_gen.gen::<u8>() % 16};
     }
 
     fn put(&mut self, input: u8) -> u8 {
