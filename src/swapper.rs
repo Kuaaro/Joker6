@@ -6,8 +6,8 @@ pub struct Swapper {
 }
 
 impl Swapper {
-    pub fn new(key: [u8; 256]) -> Self {
-        let swap_table = mk_swap_table(&key);
+    pub fn new(key: &[u8; 256]) -> Self {
+        let swap_table = mk_swap_table(key);
 
         return Swapper {shift: key[0], swap_table, reswap_table: mk_reswap_table(&swap_table)};
     }
