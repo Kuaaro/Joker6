@@ -1,7 +1,6 @@
 use crate::swapper::Swapper;
 use crate::cart::{Cart4BitsForward, ForwardCart};
 
-
 pub trait JokerExecutionUnitForward {
     fn new(key: &[u8; 256]) -> Self;
     fn put(&mut self, input: u8, index: u8) -> u8;
@@ -13,14 +12,14 @@ pub trait JokerExecutionUnitBackward {
     fn put(&mut self, input: u8, index: u8) -> u8;
 }
 
-pub struct StandardJokerExecutionUnit {
+pub struct StandardEncryptionJokerExecutionUnit {
     swapper: Swapper,
     cart: Cart4BitsForward
 }
 
-impl JokerExecutionUnitForward for StandardJokerExecutionUnit {
+impl JokerExecutionUnitForward for StandardEncryptionJokerExecutionUnit {
     fn new(key: &[u8; 256]) -> Self {
-        return StandardJokerExecutionUnit {swapper: Swapper::new(key), cart: Cart4BitsForward::new()};
+        return StandardEncryptionJokerExecutionUnit {swapper: Swapper::new(key), cart: Cart4BitsForward::new()};
     }
 
     fn put(&mut self, input: u8, index: u8) -> u8 {
