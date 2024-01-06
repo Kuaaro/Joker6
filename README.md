@@ -36,3 +36,12 @@ Disclamer: Text inside `  ` is a new addition for 6th version of the algorithm.
 ## Differences between Joker5 and Joker6 and their reasons.
 + Using output of size 256 from SHAKE256 was done for several reasons:
   + Better for creating swap table: there is $256!$ possible permutations of 256 unique bytes, which 
+## TODO
++ Finishing readme
++ CLI interface
++ decryption
++ backward file reader/writer
++ single-thread encryption
++ single-thread, multi-thread, hybrid decryption
++ optional JEU in main thread
++ additional options and possibility to extend algorithm
