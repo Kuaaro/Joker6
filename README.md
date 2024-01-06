@@ -13,3 +13,4 @@ Cart is a structure, which contains an entrance and exit, which are bytes and se
 + Returns previous exit.
 Close method doesn't take any input and returns current state of cart as one array, which contains exit, entrance and seats in this order.
 ### JEU (Joker Execution Unit)
+//TODO
