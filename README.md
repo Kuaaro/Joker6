@@ -11,6 +11,14 @@ Cart is a structure, which contains an entrance and exit, which are bytes and se
 + Moves value from seats at index of exit to entrance.
 + Replaces moved value in seats with inputed byte.
 + Returns previous exit.
+
+![seats put](https://github.com/Kuaaro/Joker6/assets/120309479/229e7cdd-c214-47c5-b76c-d562184a950d)
+
 Close method doesn't take any input and returns current state of cart as one array, which contains exit, entrance and seats in this order.
 ### JEU (Joker Execution Unit)
-//TODO
+This structure combines structures mentioned above and is responsible for single round of encryption. There are two JEU types, encryptor and decryptor.
+## Algorithm Descryption (Joker6)
+1. Take the key from user and use SHAKE256 hash function on it and save the output of size 256 bytes.
+2. Copy and modify the array, so that all elements, except the first, are smaller or equal to their index.
+3. Create a swap and reswap table, by creating an array with bytes from 0 to 255, then swap elements on nth index with element on index specified by nth element of the key array, except element at index 0. Create reswap table, so thet *reswap_table[swap_table[n]] == n for all possible byte values.
+4. 
