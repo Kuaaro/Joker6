@@ -7,14 +7,14 @@ pub fn single_jue_per_thread(from: Receiver<u8>, key: &[u8; 256], to: Sender<u8>
 
     while let Ok(value) = from.recv() {
         index += 1;
-        to.send(jeu.put(value, index));
+        to.send(jeu.put(value, index)).unwrap();
     }
 
     let mut out: [u8; 18] = [0u8; 18];
     jeu.close(&mut out, index);
 
     for i in out {
-        to.send(i);
+        to.send(i).unwrap();
     }
 }
 
@@ -36,7 +36,7 @@ pub fn multiple_jue_per_thread(from: Receiver<u8>, key: &[[u8; 256]], to: Sender
             input = jeu.put(input, index);
         }
 
-        to.send(input);
+        to.send(input).unwrap();
     }
 
     for closing_jeu in 0..jeus.len() {
@@ -50,7 +50,7 @@ pub fn multiple_jue_per_thread(from: Receiver<u8>, key: &[[u8; 256]], to: Sender
                 input = jeus[jeu].put(input, index);
             }
 
-            to.send(input);
+            to.send(input).unwrap();
         }
     }
 }
